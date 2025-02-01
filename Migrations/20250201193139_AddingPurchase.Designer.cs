@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RelationsNaN.Data;
 
@@ -11,9 +12,11 @@ using RelationsNaN.Data;
 namespace RelationsNaN.Migrations
 {
     [DbContext(typeof(RelationsNaNContext))]
-    partial class RelationsNaNContextModelSnapshot : ModelSnapshot
+    [Migration("20250201193139_AddingPurchase")]
+    partial class AddingPurchase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasIndex("PlatformsId");
 
-                    b.ToTable("GamePlatform", (string)null);
+                    b.ToTable("GamePlatform");
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Game", b =>
@@ -63,7 +66,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasIndex("GenreId");
 
-                    b.ToTable("Game", (string)null);
+                    b.ToTable("Game");
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.GamePurchase", b =>
@@ -86,7 +89,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("GamePurchase", (string)null);
+                    b.ToTable("GamePurchase");
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Genre", b =>
@@ -103,7 +106,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Genre", (string)null);
+                    b.ToTable("Genre");
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Platform", b =>
@@ -120,7 +123,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platform", (string)null);
+                    b.ToTable("Platform");
                 });
 
             modelBuilder.Entity("RelationsNaN.Models.Purchase", b =>
@@ -133,7 +136,7 @@ namespace RelationsNaN.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Purchase", (string)null);
+                    b.ToTable("Purchase");
                 });
 
             modelBuilder.Entity("GamePlatform", b =>

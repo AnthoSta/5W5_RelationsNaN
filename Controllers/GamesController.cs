@@ -105,7 +105,7 @@ namespace RelationsNaN.Controllers
                 return NotFound();
             }
             ViewData["GenreId"] = new SelectList(_context.Genre, "Id", "Name", game.GenreId);
-            ViewData["Platforms"] = new SelectList(_context.Platform, "Id", "Name", game.Platforms);
+            ViewData["Platforms"] = new SelectList(_context.Platform.Include(c => c.Games).Where(p => !p.Games.Contains(game)), "Id", "Name", game.Platforms);
             return View(game);
         }
 
@@ -181,14 +181,16 @@ namespace RelationsNaN.Controllers
         }
 
         // POST: Games/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("RemovePlatform")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemovePlatform(int id, int platformId)
         {
-            var game = await _context.Game.FindAsync(id);
-            if (game != null)
+            var game = await _context.Game.Include(c => c.Platforms).FirstOrDefaultAsync(c => c.Id == id);
+            var platform = await _context.Platform.FindAsync(platformId);
+            if (game != null && platform != null)
             {
-                _context.Game.Remove(game);
+                
+                game.Platforms.Remove(platform);
             }
 
             await _context.SaveChangesAsync();
